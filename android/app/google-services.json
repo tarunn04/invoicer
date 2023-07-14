@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "862539049469",
+    "project_id": "invo-9ce65",
+    "storage_bucket": "invo-9ce65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862539049469:android:7b3358c0d2c6d051b59194",
+        "android_client_info": {
+          "package_name": "com.example.invoicer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862539049469-u4qi07vughohcvrbjab7p161lh78hba7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGAOe8uFuaT4Fz_Fk0HH9OXe4h-ZpUtLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862539049469-u4qi07vughohcvrbjab7p161lh78hba7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "862539049469-6mb3jrkifs76iljme4fr9l2e5007821v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.invoicer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
