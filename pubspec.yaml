@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^2.14.0
   flutter:
     sdk: flutter
+  flutter_easyrefresh: ^2.2.2
   fluttertoast: ^8.2.2
   get: ^4.6.5
   google_fonts: ^5.1.0

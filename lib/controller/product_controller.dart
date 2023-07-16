@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:invoicer/model/product.dart';
 import 'package:invoicer/screens/add_product.dart';
 import 'package:invoicer/widget/toast_message.dart';
 
@@ -34,6 +35,7 @@ class ProductController extends GetxController {
   }
 
   CollectionReference products = FirebaseFirestore.instance.collection('products');
+
   final GlobalKey<FormState> ProductformKey = GlobalKey<FormState>();
 
   @override
@@ -63,54 +65,39 @@ class ProductController extends GetxController {
     return null;
   }
 
-  Future addToDb() async{
+Future addToDb() async {
   if (ProductformKey.currentState!.validate()) {
-    try {
+      String? productName = productNameController.text.capitalizeFirst?.trim();
+
+
       // Create a new product object
-      Map<String, dynamic> newProduct = {
-        'productName': productNameController.text.capitalizeFirst?.trim(),
-        'productCategory': productCategoryController.text.capitalizeFirst?.trim(),
-        'length': lengthController.text,
-        'width': widthController.text,
-        'breadth': breadthController.text,
-        'costPrice': costPriceController.text,
-        'marketPrice': marketPriceController.text,
-        'weight': weightController.text,
-        'size': sizeController.text,
-        'quantity': quantityController.text,
-      };
+      ProductModel newProduct = ProductModel(
+        productName: productName,
+        productCategory: productCategoryController.text.capitalizeFirst?.trim(),
+        length: lengthController.text,
+        width: widthController.text,
+        breadth: breadthController.text,
+        costPrice: costPriceController.text,
+        marketPrice: marketPriceController.text,
+        weight: weightController.text,
+        size: sizeController.text,
+        quantity: quantityController.text,
+      );
+// Add the new product to the Firestore collection
+      await products.doc(productName).set(newProduct.toJson());
 
-      // Get the category value
-      String? category = productCategoryController.text.capitalizeFirst;
-
-      // Check if the category document already exists
-      products.doc(category).get().then((categoryDoc) {
-        if (categoryDoc.exists) {
-          // Category exists, add the product under the existing category
-          products.doc(category).update({
-            'products': FieldValue.arrayUnion([newProduct])
-          }).then((value) {
-            ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-              content: Text("Product Added Successfully"),
-            ));
-            clearTextController();
-          });
-        } else {
-          // Category doesn't exist, create a new category document
-          products.doc(category).set({
-            'products': [newProduct]
-          }).then((value) {
-            ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-              content: Text("Product Added Successfully"),
-            ));
-            clearTextController();
-          });
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
+      // Show a success message
+      Fluttertoast.showToast(
+          msg: "Product added successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
+          textColor: Get.theme.snackBarTheme.actionTextColor,
+          fontSize: 16.0);
+      // Clear the text controllers
+      clearTextController();
+     
   }
 }
-
 }

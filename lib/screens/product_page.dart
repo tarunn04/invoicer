@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:invoicer/widget/searchbar.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../constants/text_theme.dart';
 import '../controller/product_page_controller.dart';
+import '../widget/product_view_container.dart';
 
 class ProductPage extends StatefulWidget {
   @override
@@ -13,6 +15,14 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   final ProductPageController _productPageController =
       Get.put(ProductPageController());
+  final EasyRefreshController _refreshController = EasyRefreshController();
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _refreshController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,87 +52,30 @@ class _ProductPageState extends State<ProductPage> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0,),
-            child: SearchTextField(
-            onChanged: (p0) => _productPageController.filterProducts(p0),
-            ),
-          ),
-          Expanded(
-            child: Obx(
-              () => ListView.builder(
-                itemCount: _productPageController.filteredProducts.length,
-                itemBuilder: (context, index) {
-                  Map<String, dynamic> product =
-                      _productPageController.filteredProducts[index];
-
-                  return Padding(
-                    padding:
-                        const EdgeInsets.only(top: 15.0, left: 20, right: 20),
-                    child: Container(
-                      height: height * 0.12,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.grey),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: const Offset(0, 1), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product["productName"],
-                                  style: MyTextTheme.bodyHead.copyWith(
-                                      fontSize: 18, fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  product["productCategory"],
-                                  style: MyTextTheme.bodyText,
-                                ),
-                                
-                              ],
-                            ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text("Market Price",style: MyTextTheme.bodyText.copyWith(fontSize: 14),),
-                                Text(
-                                  "₹ ${product["marketPrice"]}",
-                                  style: MyTextTheme.bodyHead.copyWith(
-                                      fontSize: 16, fontWeight: FontWeight.bold),
-                                ),
-                      
-                                Text(
-                                  "Stock: ${product["quantity"]}",
-                                  style: MyTextTheme.bodyHead.copyWith(
-                                      fontSize: 14,),
-                                )
-                                
-                              ],
-                            )
-                          ],
+         Expanded(
+          child: Obx(() => 
+              EasyRefresh(
+                controller: _refreshController,
+                onRefresh: _productPageController.fetchProducts,
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(top: 20),
+                  itemCount: _productPageController.productList.length,
+                  itemBuilder: (context, index) {
+                    final product = _productPageController.productList[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: productViewContainer(
+                        height: height, 
+                        product: product.toJson(),
                         ),
-                      ),
-                    ),
-                  );
-                
-                },
-              ),
+                    );
+                  },
+                  ),
+              ), 
             ),
-          ),
-        ],
+          )
+         
+        ]
       ),
     );
   }
