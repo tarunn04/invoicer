@@ -125,8 +125,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        Spacer(),
-                        IconButton(onPressed: (){}, icon: Icon(Icons.arrow_forward_ios,color: Colors.black,)),
+                        const Spacer(),
+                        IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_forward_ios,color: Colors.black,)),
                     ]),
                   ),
                   

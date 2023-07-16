@@ -16,9 +16,8 @@ class AddProducts extends StatefulWidget {
 }
 
 class _AddProductsState extends State<AddProducts> {
-  ProductController _productController = Get.put(ProductController());
+  final ProductController _productController = Get.put(ProductController());
 
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -28,7 +27,9 @@ class _AddProductsState extends State<AddProducts> {
         elevation: 2,
         title: Text("Add Products",style: MyTextTheme.bodyHead.copyWith(fontSize: 22)),
         leading: IconButton(
-          onPressed: (){},
+          onPressed: (){
+            Get.back();
+          },
           icon: const Icon(Icons.arrow_back_ios),
         )
       ),

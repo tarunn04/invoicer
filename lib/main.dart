@@ -3,6 +3,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:invoicer/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:invoicer/routes/routes.dart';
 import 'package:invoicer/screens/add_product.dart';
 import 'package:invoicer/screens/home_screen.dart';
 import 'package:invoicer/screens/invoice_generate.dart';
@@ -35,7 +36,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: AddProducts()
+      initialRoute: "/",
+      getPages: appRoutes(),
+      home: ProductPage()
     );
   }
 }

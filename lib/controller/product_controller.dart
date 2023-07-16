@@ -63,12 +63,13 @@ class ProductController extends GetxController {
     return null;
   }
 
-  addToDb() {
+  Future addToDb() async{
   if (ProductformKey.currentState!.validate()) {
     try {
       // Create a new product object
       Map<String, dynamic> newProduct = {
-        'productName': productNameController.text,
+        'productName': productNameController.text.capitalizeFirst?.trim(),
+        'productCategory': productCategoryController.text.capitalizeFirst?.trim(),
         'length': lengthController.text,
         'width': widthController.text,
         'breadth': breadthController.text,
@@ -80,7 +81,7 @@ class ProductController extends GetxController {
       };
 
       // Get the category value
-      String category = productCategoryController.text;
+      String? category = productCategoryController.text.capitalizeFirst;
 
       // Check if the category document already exists
       products.doc(category).get().then((categoryDoc) {

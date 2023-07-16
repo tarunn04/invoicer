@@ -4,6 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:invoicer/constants/colors.dart';
 
 class SearchTextField extends StatelessWidget {
+  Function(String) onChanged;
+  
+  SearchTextField({super.key, required this.onChanged});
+
   @override
   Widget build(BuildContext context) {
     var widget = MediaQuery.of(context).size.width;
@@ -11,13 +15,14 @@ class SearchTextField extends StatelessWidget {
       height: 60,
       width: widget * 0.9,
       decoration: BoxDecoration(
-        color: themeCream,
+        // color: themeCream,
         border: Border.all(
-          color: themeOrangePrimary,
+          color: Color.fromARGB(112, 0, 0, 0),
           width: 1.5,
         )
       ),
       child: TextField(
+        onChanged: onChanged,
         cursorColor: const Color.fromARGB(255, 147, 146, 146),
         decoration: InputDecoration(
           border: const OutlineInputBorder(
