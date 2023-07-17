@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:invoicer/constants/colors.dart';
 import 'package:invoicer/constants/text_theme.dart';
-import 'package:invoicer/widget/searchbar.dart';
+import 'package:invoicer/widget/search_text_field.dart';
 
+import '../controller/product_controller.dart';
+import '../controller/product_page_controller.dart';
 import '../widget/nav_bar.dart';
 import '../widget/sales_info_container.dart';
 
@@ -15,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ProductPageController _productPageController = Get.put(ProductPageController());
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -73,11 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 15,),
                   Text("Category",style: MyTextTheme.bodyHead),
                   const SizedBox(height: 10,),
+                  
                   GridView.builder(
                     padding: const EdgeInsets.all(0),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 1,
+                    itemCount:_productPageController.categorySet.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,

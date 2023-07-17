@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:invoicer/widget/searchbar.dart';
+import 'package:invoicer/widget/search_text_field.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../constants/text_theme.dart';
@@ -52,6 +52,12 @@ class _ProductPageState extends State<ProductPage> {
       ),
       body: Column(
         children: [
+          
+        SearchTextField(controller: _productPageController.searchController,onChanged: (query) {
+          _productPageController.searchProducts(query);
+          
+        },),
+
          Expanded(
           child: Obx(() => 
               EasyRefresh(
@@ -63,7 +69,11 @@ class _ProductPageState extends State<ProductPage> {
                   itemBuilder: (context, index) {
                     final product = _productPageController.productList[index];
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        bottom: 10,
+                      ),
                       child: productViewContainer(
                         height: height, 
                         product: product.toJson(),

@@ -40,9 +40,7 @@ class _EditProductState extends State<EditProduct> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
-                
-                
+
                 const SizedBox(height: 10,),
                 SizedBox(height: height *0.1,),
                 

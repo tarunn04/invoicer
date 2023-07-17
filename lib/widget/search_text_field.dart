@@ -5,8 +5,8 @@ import 'package:invoicer/constants/colors.dart';
 
 class SearchTextField extends StatelessWidget {
   Function(String) onChanged;
-  
-  SearchTextField({super.key, required this.onChanged});
+  TextEditingController controller;
+  SearchTextField({super.key, required this.onChanged,required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,7 @@ class SearchTextField extends StatelessWidget {
         )
       ),
       child: TextField(
+        controller: controller,
         onChanged: onChanged,
         cursorColor: const Color.fromARGB(255, 147, 146, 146),
         decoration: InputDecoration(

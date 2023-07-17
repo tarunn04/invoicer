@@ -2,51 +2,51 @@ class ProductModel {
   String? productName;
   String? productCategory;
   String? length;
+  String? height;
   String? width;
-  String? breadth;
-  String? costPrice;
-  String? marketPrice;
+  int costPrice;
+  int markedPrice;
   String? weight;
   String? size;
-  String? quantity;
+  int quantity;
 
   ProductModel({
     this.productName,
     this.productCategory,
     this.length,
+    this.height,
     this.width,
-    this.breadth,
-    this.costPrice,
-    this.marketPrice,
+    required this.costPrice,
+    required this.markedPrice,
     this.weight,
     this.size,
-    this.quantity,
+    required this.quantity,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
-      productName: json['productName'],
-      productCategory: json['productCategory'],
-      length: json['length'],
-      width: json['width'],
-      breadth: json['breadth'],
-      costPrice: json['costPrice'],
-      marketPrice: json['marketPrice'],
-      weight: json['weight'],
-      size: json['size'],
-      quantity: json['quantity'],
-    );
-  }
+  return ProductModel(
+    productName: json['productName'],
+    productCategory: json['productCategory'],
+    length: json['length'],
+    height: json['height'],
+    width: json['width'],
+    costPrice: int.parse(json['costPrice']),
+    markedPrice: int.parse(json['markedPrice']),
+    weight: json['weight'],
+    size: json['size'],
+    quantity: int.parse(json['quantity']),
+  );
+}
 
   Map<String, dynamic> toJson() {
     return {
       'productName': productName,
       'productCategory': productCategory,
       'length': length,
+      'height': height,
       'width': width,
-      'breadth': breadth,
       'costPrice': costPrice,
-      'marketPrice': marketPrice,
+      'markedPrice': markedPrice,
       'weight': weight,
       'size': size,
       'quantity': quantity,

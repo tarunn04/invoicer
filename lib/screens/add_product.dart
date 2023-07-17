@@ -71,7 +71,7 @@ class _AddProductsState extends State<AddProducts> {
                     SizedBox(width: width*0.05,),
 
 
-                    CustomFormField(width: width*0.3, height: height,textBody: "b",textHead: "Breadth",controller: _productController.breadthController,
+                    CustomFormField(width: width*0.3, height: height,textBody: "h",textHead: "Height",controller: _productController.heightController,
                      validator: (value) => _productController.validateDimention(value, "Breadth"), type: TextInputType.number
                     ),
 
@@ -111,15 +111,17 @@ class _AddProductsState extends State<AddProducts> {
 
 
                     SizedBox(width: width*0.05,),
-                    CustomFormField(width: width*0.45, height: height,textBody: "Price",textHead: "Market Price",controller: _productController.marketPriceController,
-                      validator: (value) => _productController.validate(value, "Market Price"),type: const TextInputType.numberWithOptions(decimal: true),),
+                    CustomFormField(width: width*0.45, height: height,textBody: "Price",textHead: "Marked Price",controller: _productController.markedPriceController,
+                      validator: (value) => _productController.validate(value, "Marked Price"),type: const TextInputType.numberWithOptions(decimal: true),),
                   ],
                 ),
 
   
                 const SizedBox(height: 10,),
                 SizedBox(height: height *0.1,),
-                
+                ElevatedButton(onPressed: () {
+                  _productController.addJson();
+                }, child: const Text("Add Json")),
                 Center(
                   child: SizedBox(
                     width: width*0.4,

@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:invoicer/model/json.dart';
 import 'package:invoicer/model/product.dart';
 import 'package:invoicer/screens/add_product.dart';
 import 'package:invoicer/widget/toast_message.dart';
@@ -14,9 +15,9 @@ class ProductController extends GetxController {
   final TextEditingController productCategoryController = TextEditingController();
   final TextEditingController lengthController = TextEditingController();
   final TextEditingController widthController = TextEditingController();
-  final TextEditingController breadthController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
   final TextEditingController costPriceController = TextEditingController();
-  final TextEditingController marketPriceController = TextEditingController();
+  final TextEditingController markedPriceController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
   final TextEditingController sizeController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
@@ -26,9 +27,9 @@ class ProductController extends GetxController {
     productCategoryController.clear();
     lengthController.clear();
     widthController.clear();
-    breadthController.clear();
+    heightController.clear();
     costPriceController.clear();
-    marketPriceController.clear();
+    markedPriceController.clear();
     weightController.clear();
     sizeController.clear();
     quantityController.clear();
@@ -44,9 +45,9 @@ class ProductController extends GetxController {
     productCategoryController.dispose();
     lengthController.dispose();
     widthController.dispose();
-    breadthController.dispose();
+    heightController.dispose();
     costPriceController.dispose();
-    marketPriceController.dispose();
+    markedPriceController.dispose();
     weightController.dispose();
     sizeController.dispose();
     quantityController.dispose();
@@ -71,18 +72,18 @@ Future addToDb() async {
 
 
       // Create a new product object
-      ProductModel newProduct = ProductModel(
-        productName: productName,
-        productCategory: productCategoryController.text.capitalizeFirst?.trim(),
-        length: lengthController.text,
-        width: widthController.text,
-        breadth: breadthController.text,
-        costPrice: costPriceController.text,
-        marketPrice: marketPriceController.text,
-        weight: weightController.text,
-        size: sizeController.text,
-        quantity: quantityController.text,
-      );
+     ProductModel newProduct = ProductModel(
+      productName: productName,
+      productCategory: productCategoryController.text.capitalizeFirst?.trim(),
+      length: lengthController.text,
+      width: widthController.text,
+      height: heightController.text,
+      costPrice: int.tryParse(costPriceController.text) ?? 0,
+      markedPrice: int.tryParse(markedPriceController.text) ?? 0,
+      weight: lengthController.text,
+      size: sizeController.text,
+      quantity: int.tryParse(quantityController.text) ?? 0,
+);
 // Add the new product to the Firestore collection
       await products.doc(productName).set(newProduct.toJson());
 
@@ -99,5 +100,12 @@ Future addToDb() async {
       clearTextController();
      
   }
+  
+}
+void addJson() {
+  myjson.forEach((element) {
+    var product = ProductModel.fromJson(element);
+    products.doc(product.productName).set(product.toJson());
+  });
 }
 }

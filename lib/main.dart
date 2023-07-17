@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       getPages: appRoutes(),
-      home: ProductPage()
+      // home: ProductPage()
     );
   }
 }
