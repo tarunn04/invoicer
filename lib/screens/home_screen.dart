@@ -79,26 +79,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text("Category",style: MyTextTheme.bodyHead),
                   const SizedBox(height: 10,),
                   
-                  GridView.builder(
-                    padding: const EdgeInsets.all(0),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount:_productPageController.categorySet.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 1.8,
-                      ), 
-                    itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: themeCream,
-                          border: Border.all(color: themeOrangePrimary,width: 1.5),
-                        ),
-                      );
-                    },
-                    ),
+                  Obx(() => 
+                    GridView.builder(
+                      padding: const EdgeInsets.all(0),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount:_productPageController.categorySet.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 1.8,
+                        ), 
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.toNamed("/categoryProductPage",arguments: _productPageController.categorySet.elementAt(index));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: themeOrangePrimary,width: 1.5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                _productPageController.categorySet.elementAt(index).toUpperCase(),
+                                style: MyTextTheme.bodyHead.copyWith(
+                                ),
+                            ))
+                          ),
+                        );
+                      },
+                      ),
+                  ),
                 ],
               ),
             )

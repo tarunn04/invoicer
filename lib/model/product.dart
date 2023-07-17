@@ -30,11 +30,11 @@ class ProductModel {
     length: json['length'],
     height: json['height'],
     width: json['width'],
-    costPrice: int.parse(json['costPrice']),
-    markedPrice: int.parse(json['markedPrice']),
+    costPrice: json['costPrice'],
+    markedPrice: json['markedPrice'],
     weight: json['weight'],
     size: json['size'],
-    quantity: int.parse(json['quantity']),
+    quantity: json['quantity'],
   );
 }
 

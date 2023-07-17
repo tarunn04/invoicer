@@ -56,7 +56,7 @@ class productViewContainer extends StatelessWidget {
               children: [
                 Text("Market Price",style: MyTextTheme.bodyText.copyWith(fontSize: 14),),
                 Text(
-                  "₹ ${product["marketPrice"]}",
+                  "₹ ${product["markedPrice"]}",
                   style: MyTextTheme.bodyHead.copyWith(
                       fontSize: 16, fontWeight: FontWeight.bold),
                 ),
