@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:invoicer/constants/colors.dart';
 import 'package:invoicer/constants/text_theme.dart';
 import 'package:invoicer/controller/product_controller.dart';
+import 'package:invoicer/widget/nav_bar.dart';
 
 import '../widget/custom_form_field.dart';
 import '../widget/custom_search_box.dart';
@@ -118,10 +119,8 @@ class _AddProductsState extends State<AddProducts> {
 
   
                 const SizedBox(height: 10,),
-                SizedBox(height: height *0.1,),
-                ElevatedButton(onPressed: () {
-                  _productController.addJson();
-                }, child: const Text("Add Json")),
+                SizedBox(height: height *0.08,),
+                
                 Center(
                   child: SizedBox(
                     width: width*0.4,

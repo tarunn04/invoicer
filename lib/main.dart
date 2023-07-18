@@ -11,6 +11,7 @@ import 'package:invoicer/screens/home_screen.dart';
 import 'package:invoicer/screens/invoice_generate.dart';
 import 'package:invoicer/screens/invoice_page.dart';
 import 'package:invoicer/screens/login_page.dart';
+import 'package:invoicer/screens/nav_page.dart';
 import 'package:invoicer/screens/product_page.dart';
 import 'package:invoicer/screens/splash_screen.dart';
 
@@ -34,13 +35,13 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 60, 59, 59)),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       getPages: appRoutes(),
-      // home: CategoryProductPage()
+      home: NavPage(),
     );
   }
 }
