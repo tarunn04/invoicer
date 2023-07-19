@@ -1,16 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:invoicer/model/json.dart';
 import 'package:invoicer/model/product.dart';
-import 'package:invoicer/screens/add_product.dart';
-import 'package:invoicer/widget/toast_message.dart';
 
-class ProductController extends GetxController {
+class EditProductController extends GetxController{
+
+  CollectionReference products = FirebaseFirestore.instance.collection('products');
+
+  final GlobalKey<FormState> ProductEditformKey = GlobalKey<FormState>();
+
   final TextEditingController productNameController = TextEditingController();
   final TextEditingController productCategoryController = TextEditingController();
   final TextEditingController lengthController = TextEditingController();
@@ -35,26 +33,7 @@ class ProductController extends GetxController {
     quantityController.clear();
   }
 
-  CollectionReference products = FirebaseFirestore.instance.collection('products');
-
-  final GlobalKey<FormState> ProductformKey = GlobalKey<FormState>();
-
-  @override
-  void onClose() {
-    productNameController.dispose();
-    productCategoryController.dispose();
-    lengthController.dispose();
-    widthController.dispose();
-    heightController.dispose();
-    costPriceController.dispose();
-    markedPriceController.dispose();
-    weightController.dispose();
-    sizeController.dispose();
-    quantityController.dispose();
-    super.onClose();
-  }
-
-  String? validate(String? value, String? textBody) {
+   String? validate(String? value, String? textBody) {
     if (value == null || value.isEmpty) {
       return '$textBody is required';
     }
@@ -65,14 +44,26 @@ class ProductController extends GetxController {
     // Your validation logic here
     return null;
   }
+    void refillTextFields(Map<String, dynamic> product) {
+    productNameController.text = product['productName'] ?? '';
+    productCategoryController.text = product['productCategory'] ?? '';
+    lengthController.text = product['length']?.toString() ?? '';
+    widthController.text = product['width']?.toString() ?? '';
+    heightController.text = product['height']?.toString() ?? '';
+    weightController.text = product['weight']?.toString() ?? '';
+    sizeController.text = product['size'] ?? '';
+    quantityController.text = product['quantity']?.toString() ?? '';
+    costPriceController.text = product['costPrice']?.toString() ?? '';
+    markedPriceController.text = product['markedPrice']?.toString() ?? '';
+  }
 
-Future addToDb() async {
-  if (ProductformKey.currentState!.validate()) {
+  Future<void> updateProduct() async {
+    if (ProductEditformKey.currentState!.validate()) {
       String? productName = productNameController.text.capitalizeFirst?.trim();
 
 
       // Create a new product object
-     ProductModel newProduct = ProductModel(
+     ProductModel updatedProduct = ProductModel(
       productName: productName,
       productCategory: productCategoryController.text.capitalizeFirst?.trim(),
       length: lengthController.text,
@@ -84,28 +75,29 @@ Future addToDb() async {
       size: sizeController.text,
       quantity: int.tryParse(quantityController.text) ?? 0,
       );
-// Add the new product to the Firestore collection
-      await products.doc(productName).set(newProduct.toJson());
+      try {
+        // Update the product in Firestore using the documentId
+        await products.doc(productName).update(updatedProduct.toJson());
 
-      // Show a success message
-      Fluttertoast.showToast(
-          msg: "Product added successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-          textColor: Get.theme.snackBarTheme.actionTextColor,
-          fontSize: 16.0);
-      // Clear the text controllers
-      clearTextController();
-     
+        // Clear text controllers after successful update
+        clearTextController();
+
+        // Show a success message or perform other actions if needed
+        Get.snackbar(
+          'Product Updated',
+          'Product details have been updated successfully!',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } catch (e) {
+        // Handle errors while updating the product
+        Get.snackbar(
+          'Error',
+          '$e',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    }     
   }
   
-}
-void addJson() {
-  myjson.forEach((element) {
-    var product = ProductModel.fromJson(element);
-    products.doc(product.productName).set(product.toJson());
-  });
-}
+  
 }

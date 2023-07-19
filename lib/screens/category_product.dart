@@ -70,9 +70,14 @@ class _CategoryProductPageState extends State<CategoryProductPage> {
                         right: 20,
                         bottom: 10,
                       ),
-                    child: productViewContainer(
-                      height: height,
-                      product: _categoryProductPageController.productsList[index].toJson(),
+                    child: InkWell(
+                      onTap: (){
+                        Get.toNamed("/editProduct",arguments: _categoryProductPageController.productsList[index].toJson());
+                      },
+                      child: productViewContainer(
+                        height: height,
+                        product: _categoryProductPageController.productsList[index].toJson(),
+                      ),
                     ),
                   );
                 },),

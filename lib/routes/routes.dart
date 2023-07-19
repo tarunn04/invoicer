@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 import 'package:invoicer/screens/add_product.dart';
+import 'package:invoicer/screens/edit_product.dart';
 import 'package:invoicer/screens/home_screen.dart';
 import 'package:invoicer/screens/product_page.dart';
 
 import '../screens/category_product.dart';
-import '../screens/product_edit.dart';
+import '../screens/nav_page.dart';
 
 appRoutes() => [
   GetPage(name: "/productPage", 
@@ -15,8 +16,8 @@ appRoutes() => [
   page: () => AddProducts(),
   ),
 
-  GetPage(name: "/editProduct", 
-  page: () => EditProduct(),
+ GetPage(name: "/editProduct", 
+  page: () => EditProduct(product: Get.arguments as Map<String, dynamic>),
   ),
 
   GetPage(name: "/", 
@@ -25,6 +26,10 @@ appRoutes() => [
 
 GetPage(name: "/categoryProductPage", 
   page: () => CategoryProductPage(category: Get.arguments as String),
+  ),
+  
+  GetPage(name: "/navPage", 
+  page: () => NavPage(),
   ),
   
 ];

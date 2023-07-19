@@ -7,18 +7,30 @@ import 'package:invoicer/controller/nav_bar_controller.dart';
 import 'package:invoicer/controller/product_controller.dart';
 import 'package:invoicer/widget/nav_bar.dart';
 
+import '../controller/edit_product_controller.dart';
 import '../widget/custom_form_field.dart';
 import '../widget/custom_search_box.dart';
 
-class AddProducts extends StatefulWidget {
-  const AddProducts({super.key});
+class EditProduct extends StatefulWidget {
+  EditProduct({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  Map<String, dynamic> product;
 
   @override
-  State<AddProducts> createState() => _AddProductsState();
+  State<EditProduct> createState() => _EditProductState();
 }
 
-class _AddProductsState extends State<AddProducts> {
-  final ProductController _productController = Get.put(ProductController());
+class _EditProductState extends State<EditProduct> {
+  final EditProductController _productController = Get.put(EditProductController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    _productController.refillTextFields(widget.product);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -26,7 +38,7 @@ class _AddProductsState extends State<AddProducts> {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
-        title: Text("Add Product",style: MyTextTheme.bodyHead.copyWith(fontSize: 22)),
+        title: Text("Edit Product",style: MyTextTheme.bodyHead.copyWith(fontSize: 22)),
         leading: IconButton(
           onPressed: (){
             Get.back();
@@ -35,14 +47,12 @@ class _AddProductsState extends State<AddProducts> {
         )
       ),
       body: Form(
-        key: _productController.ProductformKey,
+        key: _productController.ProductEditformKey,
         child: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-
                 CustomFormField(width: width, height: height,textBody: "Enter Product Name",textHead: "Product Name", controller: _productController.productNameController, 
                 validator: (value) => _productController.validate(value, "Product Name"), type: TextInputType.text,),
                 
@@ -127,7 +137,7 @@ class _AddProductsState extends State<AddProducts> {
                     height: height*0.065,
                     child: ElevatedButton(
                       onPressed: (){
-                        _productController.addToDb();
+                        _productController.updateProduct();
                       },
                       style: ElevatedButton.styleFrom(
           
@@ -138,7 +148,7 @@ class _AddProductsState extends State<AddProducts> {
                           
                         )
                       ),
-                      child:  Text("Add Product",style: MyTextTheme.bodyText.copyWith(fontSize: 16),),
+                      child:  Text("Edit Product",style: MyTextTheme.bodyText.copyWith(fontSize: 16),),
                     ),
                   ),
                 )
