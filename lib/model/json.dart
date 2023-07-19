@@ -7,9 +7,9 @@ List<Map<String, dynamic>> myjson = [
         "length": "3.56",
         "width": "1.40",
         "height": "",
-        "costPrice": "6000",
-        "markedPrice": "10000",
-        "quantity": "6",
+        "costPrice": 6000,
+        "markedPrice": 10000,
+        "quantity": 6,
        
     },
     {
@@ -20,9 +20,9 @@ List<Map<String, dynamic>> myjson = [
         "length": "2.03",
         "width": "1.52",
         "height": "",
-        "costPrice": "2000",
-        "markedPrice": "6000",
-        "quantity": "3",
+        "costPrice": 2000,
+        "markedPrice": 6000,
+        "quantity": 3,
         
     },
     {
@@ -33,9 +33,9 @@ List<Map<String, dynamic>> myjson = [
         "length": "0.53",
         "width": "0.53",
         "height": "",
-        "costPrice": "10000",
-        "markedPrice": "16000",
-        "quantity": "1",
+        "costPrice": 10000,
+        "markedPrice": 16000,
+        "quantity": 1,
   
     },
     {
@@ -46,9 +46,9 @@ List<Map<String, dynamic>> myjson = [
         "length": "",
         "width": "",
         "height": "",
-        "costPrice": "2000",
-        "markedPrice": "6000",
-        "quantity": "2",
+        "costPrice": 2000,
+        "markedPrice": 6000,
+        "quantity": 2,
   
     },
     {
@@ -59,9 +59,9 @@ List<Map<String, dynamic>> myjson = [
         "length": "2.74",
         "width": "1.83",
         "height": "",
-        "costPrice": "80000",
-        "markedPrice": "130000",
-        "quantity": "1",
+        "costPrice": 80000,
+        "markedPrice": 130000,
+        "quantity": 1,
       
     },
     {
@@ -72,8 +72,8 @@ List<Map<String, dynamic>> myjson = [
         "length": "0.14",
         "width": "0.10",
         "height": "0.12",
-        "costPrice": "5000",
-        "markedPrice": "13000",
-        "quantity": "1"
+        "costPrice": 5000,
+        "markedPrice": 13000,
+        "quantity": 1,
     }
 ];

@@ -19,7 +19,7 @@ class EditProductController extends GetxController{
   final TextEditingController weightController = TextEditingController();
   final TextEditingController sizeController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
-
+  String uniqueId = '';
   clearTextController() {
     productNameController.clear();
     productCategoryController.clear();
@@ -45,6 +45,7 @@ class EditProductController extends GetxController{
     return null;
   }
     void refillTextFields(Map<String, dynamic> product) {
+    uniqueId = product['id'] ?? '';
     productNameController.text = product['productName'] ?? '';
     productCategoryController.text = product['productCategory'] ?? '';
     lengthController.text = product['length']?.toString() ?? '';
@@ -64,6 +65,7 @@ class EditProductController extends GetxController{
 
       // Create a new product object
      ProductModel updatedProduct = ProductModel(
+      id: uniqueId,
       productName: productName,
       productCategory: productCategoryController.text.capitalizeFirst?.trim(),
       length: lengthController.text,
@@ -77,8 +79,7 @@ class EditProductController extends GetxController{
       );
       try {
         // Update the product in Firestore using the documentId
-        await products.doc(productName).update(updatedProduct.toJson());
-
+        await products.doc(uniqueId).update(updatedProduct.toJson());
         // Clear text controllers after successful update
         clearTextController();
 

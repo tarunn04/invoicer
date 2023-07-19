@@ -120,7 +120,9 @@ class _AddProductsState extends State<AddProducts> {
   
                 const SizedBox(height: 10,),
                 SizedBox(height: height *0.08,),
-                
+                ElevatedButton(onPressed: () {
+                  _productController.addJson();
+                }, child: Text("Add Json",style: MyTextTheme.bodyText.copyWith(fontSize: 16),),),
                 Center(
                   child: SizedBox(
                     width: width*0.4,

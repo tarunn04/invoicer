@@ -13,7 +13,7 @@ class ProductPageController extends GetxController {
   final RxString searchQuery = ''.obs;
   List<ProductModel> originalProductList = [];
   RxSet categorySet = <String>{}.obs;
-  RxInt len = 0.obs;
+  // RxInt len = 0.obs;
 
   @override
   void onInit() {
@@ -29,17 +29,22 @@ class ProductPageController extends GetxController {
   }
 
   Future<void> fetchProducts() async {
-    try {
-      final querySnapshot = await products.get();
-      originalProductList = querySnapshot.docs
-          .map((doc) =>
-              ProductModel.fromJson(doc.data() as Map<String, dynamic>))
-          .toList();
-      productList.value = List<ProductModel>.from(originalProductList);
-    } catch (e) {
-      print('Error fetching products: $e');
-    }
+  try {
+    final querySnapshot = await products.get();
+    originalProductList = querySnapshot.docs.map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+      data['id'] = doc.id; // Add the document ID to the data map
+
+      return ProductModel.fromJson(data);
+    }).toList();
+
+
+    productList.value = List<ProductModel>.from(originalProductList);
+  } catch (e) {
+    print('Error fetching products: $e');
   }
+}
   Future<void> fetchUniqueCategories() async {
     try {
       final querySnapshot = await products.get();
@@ -51,11 +56,13 @@ class ProductPageController extends GetxController {
           categorySet.add(category);
         }
       });
-      len.value = categorySet.length;
+
+      // len.value = categorySet.length;
     } catch (e) {
       print('Error fetching unique categories: $e');
     }
   }
+
   void searchProducts(String query) {
     final lowercaseQuery = query.trim().toLowerCase();
     searchQuery.value = lowercaseQuery; 

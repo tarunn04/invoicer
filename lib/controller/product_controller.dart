@@ -9,6 +9,8 @@ import 'package:invoicer/model/json.dart';
 import 'package:invoicer/model/product.dart';
 import 'package:invoicer/screens/add_product.dart';
 import 'package:invoicer/widget/toast_message.dart';
+import 'package:uuid/uuid.dart';
+
 
 class ProductController extends GetxController {
   final TextEditingController productNameController = TextEditingController();
@@ -69,10 +71,11 @@ class ProductController extends GetxController {
 Future addToDb() async {
   if (ProductformKey.currentState!.validate()) {
       String? productName = productNameController.text.capitalizeFirst?.trim();
-
+      String uniqueId = Uuid().v4();
 
       // Create a new product object
      ProductModel newProduct = ProductModel(
+      id: uniqueId,
       productName: productName,
       productCategory: productCategoryController.text.capitalizeFirst?.trim(),
       length: lengthController.text,
@@ -85,7 +88,7 @@ Future addToDb() async {
       quantity: int.tryParse(quantityController.text) ?? 0,
       );
 // Add the new product to the Firestore collection
-      await products.doc(productName).set(newProduct.toJson());
+      await products.doc(uniqueId).set(newProduct.toJson());
 
       // Show a success message
       Fluttertoast.showToast(
@@ -104,8 +107,13 @@ Future addToDb() async {
 }
 void addJson() {
   myjson.forEach((element) {
+
+    String unique = Uuid().v4();
+
+    element['id'] = unique;
+
     var product = ProductModel.fromJson(element);
-    products.doc(product.productName).set(product.toJson());
+    products.doc(unique).set(product.toJson());
   });
 }
 }
