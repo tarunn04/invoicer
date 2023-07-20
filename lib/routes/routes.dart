@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:invoicer/screens/add_customer.dart';
 import 'package:invoicer/screens/add_product.dart';
+import 'package:invoicer/screens/billing.dart';
+import 'package:invoicer/screens/edit_customer.dart';
 import 'package:invoicer/screens/edit_product.dart';
 import 'package:invoicer/screens/home_screen.dart';
 import 'package:invoicer/screens/product_page.dart';
@@ -31,6 +34,19 @@ GetPage(name: "/categoryProductPage",
   GetPage(name: "/navPage", 
   page: () => NavPage(),
   ),
+  GetPage(name: "/addCustomer", 
+  page: () => AddCustomer(),
+  ),
+
+  GetPage(name: "/editCustomer", 
+  page: () => EditCustomer(),
+  ),
+
+
+  GetPage(name: "/billing", 
+  page: () => Billing(),
+  ),
+  
   
 ];
 //  GetPage(name: '/wallpaperPage',

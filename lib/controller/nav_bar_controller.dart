@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:invoicer/screens/add_product.dart';
 import 'package:invoicer/screens/home_screen.dart';
+import 'package:invoicer/screens/billing.dart';
 import 'package:invoicer/screens/product_page.dart';
 
 class NavBarController extends GetxController{
@@ -19,7 +20,7 @@ class NavBarController extends GetxController{
   final List<Widget> pages = [
     HomeScreen(),
     ProductPage(),
-    AddProducts(),
+    Billing(),
     ProductPage(),
     ProductPage(),
   ];

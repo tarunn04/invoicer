@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:invoicer/controller/invoice_controller.dart';
 
 import '../constants/text_theme.dart';
 
 class Billing extends StatefulWidget {
-  const Billing({super.key});
+  // Map <String,dynamic> customerData = Get.arguments as Map<String,dynamic>;
+  Billing({super.key});
 
   @override
   State<Billing> createState() => _BillingState();
@@ -12,8 +15,8 @@ class Billing extends StatefulWidget {
 
 class _BillingState extends State<Billing> {
   var selectedOption;
-
-  @override
+  final InvoiceController _invoiceController = Get.put(InvoiceController());
+  @override 
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -33,29 +36,56 @@ class _BillingState extends State<Billing> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               
-              Text("Billing To",style: MyTextTheme.bodyHead,),
+              Row(
+                children: [
+                  Text("Billing To",style: MyTextTheme.bodyHead,),
+                  Spacer(),
+
+                  // !_invoiceController.isAdded.value?
+                  // InkWell(
+                  //   onTap: (){
+                  //     Get.toNamed("/addCustomer");
+                  //   },
+                  //   child: Text("Add Customer",style: MyTextTheme.bodyText.copyWith(color:const Color.fromARGB(255, 0, 83, 151),fontSize: 16),))
+                  // : Text(""),
+                ],
+              ),
               const SizedBox(height: 10,),
+              
               Container(
                 width: width*0.9,
                 height: height*0.1,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey)
                 ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
-                  title: Text("B Tarun",style: MyTextTheme.bodyText,),
-                  subtitle: Text("7000334100",style: MyTextTheme.bodyText.copyWith(color:const  Color.fromARGB(200, 78, 78, 78),),),
-                  trailing: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Text("edit",style: MyTextTheme.bodyText.copyWith(color:const Color.fromARGB(255, 0, 83, 151),fontSize: 16),)),
-                      const SizedBox(height: 2,),
-                      Text("b.tarun10@gmail.com",style: MyTextTheme.bodyText.copyWith(fontSize: 14)),
-                    ],
-                  ),
-                  
+
+                child:
+                 Obx(() =>  _invoiceController.customer.isNotEmpty?
+                 ListTile(
+                    contentPadding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
+                    title: Text(_invoiceController.customer['customerName'],style: MyTextTheme.bodyText,),
+                    subtitle: Text(_invoiceController.customer['customerPhone'],style: MyTextTheme.bodyText.copyWith(color:const  Color.fromARGB(200, 78, 78, 78),),),
+                    trailing: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed("/editCustomer");
+                          },
+                          child: Text("edit",style: MyTextTheme.bodyText.copyWith(color:const Color.fromARGB(255, 0, 83, 151),fontSize: 16),)),
+                        const SizedBox(height: 2,),
+                        Text(_invoiceController.customer['customerEmail'],style: MyTextTheme.bodyText.copyWith(fontSize: 14)),
+                      ],
+                    ),
+                    
+                  ):
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed("/addCustomer");
+                      },
+                      child: Text("Add Customer(+)",style: MyTextTheme.bodyText.copyWith(fontSize: 18,color: const Color.fromARGB(255, 0, 83, 151),),)),
+                  )
                 ),
               ),
               
