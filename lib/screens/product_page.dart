@@ -4,6 +4,7 @@ import 'package:invoicer/widget/search_text_field.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../constants/text_theme.dart';
+import '../controller/edit_product_controller.dart';
 import '../controller/product_page_controller.dart';
 import '../widget/product_view_container.dart';
 
@@ -15,6 +16,8 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   final ProductPageController _productPageController =
       Get.put(ProductPageController());
+    // final EditProductController _productController = Get.put(EditProductController());
+
   final EasyRefreshController _refreshController = EasyRefreshController();
 
 @override
@@ -74,10 +77,15 @@ class _ProductPageState extends State<ProductPage> {
                         right: 20,
                         bottom: 10,
                       ),
-                      child: productViewContainer(
-                        height: height, 
-                        product: product.toJson(),
-                        ),
+                      child: InkWell(
+                        onTap: () {
+                          Get.toNamed("/editProduct",arguments: product.toJson());
+                        },
+                        child: productViewContainer(
+                          height: height, 
+                          product: product.toJson(),
+                          ),
+                      ),
                     );
                   },
                   ),
